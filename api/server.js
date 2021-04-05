@@ -15,7 +15,7 @@ const options = {
   useUnifiedTopology: true,
   useFindAndModify:false
 };
-
+ 
 mongoose.connect(uri, options)
   .then(() => {
     console.log("Connecté à la base MongoDB assignments dans le cloud !");

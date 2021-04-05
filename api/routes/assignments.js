@@ -20,7 +20,7 @@ function postAssignment(req, res){
     let assignment = new Assignment();
     assignment.id = req.body.id;
     assignment.nom = req.body.nom;
-    assignment.dateDeRendu = req.body.dateDeRendu;
+    assignment.dateRendu = req.body.dateRendu;
     assignment.rendu = req.body.rendu;
 
     console.log("POST assignment reçu :");
@@ -55,7 +55,6 @@ function updateAssignment(req, res) {
 function getAssignment(req, res){
    
     let assignmentId = req.params.id;
-
     Assignment.findOne({id: assignmentId}, (err, assignment) =>{
         if(err){res.send(err)}
         res.json(assignment);
@@ -64,7 +63,7 @@ function getAssignment(req, res){
 // suppression d'un assignment (DELETE)
 function deleteAssignment(req, res) {
     let assignmentId = req.params.id;
-    Assignment.findOneAndRemove({id: assignmentId}, (err, assignment) => {
+    Assignment.findByIdAndRemove(assignmentId, (err, assignment) => {
         if (err) {
             console.log(err+" err");
             res.send(err);
