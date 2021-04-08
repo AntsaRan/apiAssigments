@@ -1,19 +1,35 @@
 let Assignment = require('../model/assignment');
 
-// Récupérer tous les assignments (GET)
+/* Récupérer tous les assignments (GET)
 function getAssignments(req, res){
     console.log("gets");
     Assignment.find((err, assignments) => {
         if(err){
             res.send(err)
         }
-        console.log(assignments);
+      //  console.log(assignments);
         res.send(assignments);
     });
-}
+} */
 
 
-
+// Récupérer tous les assignments (GET)
+function getAssignments(req, res) {
+    var aggregateQuery = Assignment.aggregate();
+    Assignment.aggregatePaginate(aggregateQuery,
+      {
+        page: parseInt(req.query.page) || 1,
+        limit: parseInt(req.query.limit) || 10,
+      },
+      (err, assignments) => {
+        if (err) {
+          res.send(err);
+        }
+        res.send(assignments);
+      }
+    );
+   }
+   
 // Ajout d'un assignment (POST)
 function postAssignment(req, res){
     console.log("post");
@@ -22,10 +38,6 @@ function postAssignment(req, res){
     assignment.nom = req.body.nom;
     assignment.dateRendu = req.body.dateRendu;
     assignment.rendu = req.body.rendu;
-
-    console.log("POST assignment reçu :");
-    console.log(assignment)
-
     assignment.save( (err) => {
         if(err){
             res.send('cant post assignment ', err);
