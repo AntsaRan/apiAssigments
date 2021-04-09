@@ -3,6 +3,7 @@ let app = express();
 let bodyParser = require('body-parser');
 let assignment = require('./routes/assignments');
 let user = require('./routes/user');
+var AuthController = require('./auth/AuthController');
 
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -34,7 +35,7 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
 });
-
+app.use('/api/auth', AuthController);
 // Pour les formulaires
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
