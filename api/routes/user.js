@@ -35,9 +35,8 @@ function login(req, res) {
                 expiresIn: 86400 // expires in 24 hours
             });
 
-            res.status(200).send({ auth: true, id: user._id, usrname: user.username, token: token });
+            res.status(200).send({ auth: true, id: user._id, username: user.username, token: token });
         }
-
     });
 }
 
