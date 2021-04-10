@@ -12,14 +12,6 @@ function getUSer(req, res) {
     });
 
 }
-function getAssignment(req, res){
-   
-    let assignmentId = req.params.id;
-    Assignment.findOne({id: assignmentId}, (err, assignment) =>{
-        if(err){res.send(err)}
-        res.json(assignment);
-    })
-}
 function login(req, res) {
 
     User.findOne({ username: req.body.username }, function (err, user) {
@@ -35,7 +27,7 @@ function login(req, res) {
                 expiresIn: 86400 // expires in 24 hours
             });
 
-            res.status(200).send({ auth: true, id: user._id, username: user.username, token: token });
+            res.status(200).send({ auth: true, id: user._id, username: user.username, isadmin:user.isadmin,token: token });
         }
     });
 }
