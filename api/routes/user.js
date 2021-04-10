@@ -12,14 +12,18 @@ function getUSer(req, res) {
     });
 
 }
+
 function login(req, res) {
 
     User.findOne({ username: req.body.username }, function (err, user) {
+        console.log("LOGIN o");
+
         if (err) {
             res.send(err);
         } else if (!user) {
             res.send(err);
         } else {
+            console.log("LOGIN");
             var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
             if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 
