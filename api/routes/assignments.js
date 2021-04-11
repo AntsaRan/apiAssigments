@@ -54,7 +54,7 @@ function postAssignment(req, res) {
 function updateAssignment(req, res) {
     console.log("UPDATE recu assignment : ");
     console.log(req.body.id);
-    Assignment.findOneAndUpdate(req.body.id, req.body, { new: true }, (err, assignment) => {
+    Assignment.findByIdAndUpdate(req.body._id, req.body, { new: true }, (err, assignment) => {
         if (err) {
             console.log(err);
             res.send(err)
