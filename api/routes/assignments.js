@@ -73,29 +73,15 @@ function getAssignmentsPaged(req, res) {
     //return Assignment.findOne({ _id:id}).populate("id_eleve");
 
 }
-async function getAssignmentsPagedPopulate (req,res){
-    const options = {
-        page: parseInt(req.query.page) || 1,
-        limit: parseInt(req.query.limit) || 10,
-        populate: 'id_eleve',
-        lean: true,
-    };
-    return await Assignment.paginate({}, options);
-   /* var tutorial = await getAssignmentsPaged(req, res);
-    if (!tutorial) {
-        res.send("err");
-    }
-    console.log(JSON.stringify(tutorial) + " OUOUOuUOUOU");
-    res.send(tutorial);*/
-}
-/*const getAssignmentsPagedPopulate = async function (req, res) {
+
+const getAssignmentsPagedPopulate = async function (req, res) {
     var tutorial = await getAssignmentsPaged(req, res);
     if (!tutorial) {
         res.send("err");
     }
     console.log(JSON.stringify(tutorial) + " OUOUOuUOUOU");
     res.send(tutorial);
-}*/
+}
 // Ajout d'un assignment (POST)
 function postAssignment(req, res) {
     console.log("post");
