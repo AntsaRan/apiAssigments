@@ -9,7 +9,15 @@ function getEleve(req, res) {
         res.json(eleve);
     })
 }
-
+function getEleveList(req,res){
+    Assignment.find((err, eleves) => {
+        if(err){
+            res.send(err)
+        }
+      //  console.log(assignments);
+        res.send(eleves);
+    });
+}
 // Ajout d'un eleve (POST)
 function postEleve(req, res) {
     console.log("post eleve");
@@ -24,4 +32,4 @@ function postEleve(req, res) {
     })
 }
 
-module.exports = { getEleve, postEleve };
+module.exports = { getEleveList,getEleve, postEleve };

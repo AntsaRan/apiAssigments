@@ -53,20 +53,22 @@ const prefix = '/api';
 
 //les Assignments
 app.route(prefix + '/assignments')
-    .get(VerifyToken, assignment.getAssignments)
+    .get(VerifyToken, assignment.getAssignmentsPagedPopulate)
     .post(VerifyToken, assignment.postAssignment)
     .put(VerifyToken, assignment.updateAssignment);
 
 
 app.route(prefix + '/assignments/:id')
     .get(VerifyToken, assignment.getAssignment)
-    .delete, (VerifyToken, assignment.deleteAssignment);
+    .delete(VerifyToken, assignment.deleteAssignment);
 
+/* USER */
 app.route(prefix + '/auth/:id', )
     .get(user.getUSer);
 
 //Les eleves
 app.route(prefix + '/eleve')
+    .get(eleve.getEleveList)
     .post(eleve.postEleve);
 
 app.route(prefix + '/eleve/:id')
