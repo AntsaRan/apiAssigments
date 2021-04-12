@@ -14,7 +14,10 @@ let AssignmentSchema = Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Eleve',
     },
-    id_matiere: Number,
+    id_matiere:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Matiere',
+    },
     note: Number,
     remarque: String
 });

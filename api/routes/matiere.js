@@ -9,7 +9,15 @@ function getMatiere(req, res) {
         res.json(matiere);
     })
 }
-
+function getMatiereList(req, res) {
+    console.log(" GetMatiereList");
+    Matiere.find((err, matieres) => {
+        if (err) {
+            res.send(err)
+        }
+        res.send(matieres);
+    });
+}
 // Ajout d'un matiere (POST)
 function postMatiere(req, res) {
     console.log("post matiere");
@@ -26,4 +34,4 @@ function postMatiere(req, res) {
     })
 }
 
-module.exports = { getMatiere, postMatiere };
+module.exports = {getMatiereList, getMatiere, postMatiere };

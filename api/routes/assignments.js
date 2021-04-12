@@ -65,7 +65,7 @@ function getAssignmentsPaged(req, res) {
     const options = {
         page: parseInt(req.query.page) || 1,
         limit: parseInt(req.query.limit) || 10,
-        populate: 'id_eleve',
+        populate: ['id_eleve','id_matiere'],
         lean: true,
     };
     return Assignment.paginate({}, options);
@@ -92,6 +92,9 @@ function postAssignment(req, res) {
     assignment.rendu = req.body.rendu;
     assignment.id_eleve = req.body.id_eleve;
     assignment.id_matiere = req.body.id_matiere;
+    console.log(req.body.note+ " req.body.note");
+    console.log(req.body.remarque+ " req.body.remarque");
+
     assignment.note = req.body.note;
     assignment.remarque = req.body.remarque;
 

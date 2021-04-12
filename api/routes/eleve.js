@@ -2,19 +2,19 @@ let Eleve = require('../model/eleve');
 
 // Récupérer un eleve par son id (GET)
 function getEleve(req, res) {
-
     let eleveId = req.params.id;
     Eleve.findOne({ id: eleveId }, (err, eleve) => {
         if (err) { res.send(err) }
         res.json(eleve);
     })
 }
-function getEleveList(req,res){
-    Assignment.find((err, eleves) => {
-        if(err){
+function getEleveList(req, res) {
+    console.log(" GETELEVELIST");
+    Eleve.find((err, eleves) => {
+        if (err) {
             res.send(err)
         }
-      //  console.log(assignments);
+         console.log(JSON.stringify(eleves));
         res.send(eleves);
     });
 }
@@ -32,4 +32,4 @@ function postEleve(req, res) {
     })
 }
 
-module.exports = { getEleveList,getEleve, postEleve };
+module.exports = { getEleveList, getEleve, postEleve };
