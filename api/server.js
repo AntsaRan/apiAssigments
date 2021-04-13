@@ -24,16 +24,16 @@ const options = {
 
 mongoose.connect(uri, options)
     .then(() => {
-        console.log("Connecté à la base MongoDB assignments dans le cloud !");
-        console.log("at URI = " + uri);
-        console.log("vérifiez with http://localhost:8010/api/assignments que cela fonctionne")
-    },
+            console.log("Connecté à la base MongoDB assignments dans le cloud !");
+            console.log("at URI = " + uri);
+            console.log("vérifiez with http://localhost:8010/api/assignments que cela fonctionne")
+        },
         err => {
             console.log('Erreur de connexion: ', err);
         });
 
 // Pour accepter les connexions cross-domain (CORS)
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers")
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,x-access-token");
@@ -65,7 +65,7 @@ app.route(prefix + '/assignments/:id')
     .delete(VerifyToken, assignment.deleteAssignment);
 
 /* USER */
-app.route(prefix + '/auth/:id',)
+app.route(prefix + '/auth/:id', )
     .get(user.getUSer);
 
 //Les eleves
@@ -83,6 +83,8 @@ app.route(prefix + '/matiere')
 
 app.route(prefix + '/matiere/:id')
     .get(matiere.getMatiere);
+app.route(prefix + '/matiereObjId/:id')
+    .get(matiere.getMatiereObjId);
 
 //Les prof
 app.route(prefix + '/prof')
@@ -90,6 +92,8 @@ app.route(prefix + '/prof')
 
 app.route(prefix + '/prof/:id')
     .get(prof.getProf);
+app.route(prefix + '/profObjId/:id')
+    .get(prof.getProfObjId);
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");

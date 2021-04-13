@@ -10,6 +10,15 @@ function getProf(req, res) {
     })
 }
 
+function getProfObjId(req, res) {
+
+    let profId = req.params.id;
+    Matiere.findOne({ _id: profId }, (err, matiere) => {
+        if (err) { res.send(err) }
+        res.json(matiere);
+    })
+}
+
 // Ajout d'un prof (POST)
 function postProf(req, res) {
     console.log("post prof");
@@ -25,4 +34,4 @@ function postProf(req, res) {
     })
 }
 
-module.exports = { getProf, postProf };
+module.exports = { getProf, postProf, getProfObjId };

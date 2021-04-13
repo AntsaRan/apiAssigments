@@ -9,6 +9,16 @@ function getMatiere(req, res) {
         res.json(matiere);
     })
 }
+
+function getMatiereObjId(req, res) {
+
+    let matiereId = req.params.id;
+    Matiere.findOne({ _id: matiereId }, (err, matiere) => {
+        if (err) { res.send(err) }
+        res.json(matiere);
+    })
+}
+
 function getMatiereList(req, res) {
     console.log(" GetMatiereList");
     Matiere.find((err, matieres) => {
@@ -34,4 +44,4 @@ function postMatiere(req, res) {
     })
 }
 
-module.exports = {getMatiereList, getMatiere, postMatiere };
+module.exports = { getMatiereList, getMatiere, postMatiere, getMatiereObjId };
