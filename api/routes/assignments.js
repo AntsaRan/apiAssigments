@@ -72,6 +72,7 @@ function postAssignment(req, res) {
 
 // Update d'un assignment (PUT)
 function updateAssignment(req, res) {
+    console.log(req.body._id + 'req.body._id');
     Assignment.findByIdAndUpdate(req.body._id, req.body, { new: true }, (err, assignment) => {
         if (err) {
             console.log(err);
