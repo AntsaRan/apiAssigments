@@ -57,6 +57,8 @@ app.route(prefix + '/assignments')
     .post(VerifyToken, assignment.postAssignment)
     .put(VerifyToken, assignment.updateAssignment);
 
+app.route(prefix + '/assignments/search/')
+    .get(assignment.getAssignmentsPagedPopulateSearch);
 
 app.route(prefix + '/assignments/:id')
     .get(VerifyToken, assignment.getAssignment)

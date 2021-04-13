@@ -9,18 +9,15 @@ function getEleve(req, res) {
     })
 }
 function getEleveList(req, res) {
-    console.log(" GETELEVELIST");
     Eleve.find((err, eleves) => {
         if (err) {
             res.send(err)
         }
-         console.log(JSON.stringify(eleves));
         res.send(eleves);
     });
 }
 // Ajout d'un eleve (POST)
 function postEleve(req, res) {
-    console.log("post eleve");
     let eleve = new Eleve();
     eleve.id = req.body.id;
     eleve.nom = req.body.nom;

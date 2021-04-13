@@ -24,11 +24,11 @@ function getAssignments(req, res) {
             if (err) {
                 res.send(err);
             }
-            console.log(JSON.stringify(assignments) + " OUOUOuUOUOU");
             res.send(assignments);
         }
     );
 }
+
 
 function getAssignmentsPagedSimple(req, res) {
     var aggregateQuery = Assignment.aggregate();
@@ -43,48 +43,15 @@ function getAssignmentsPagedSimple(req, res) {
             if (err) {
                 res.send(err);
             }
-            console.log(JSON.stringify(assignments) + " OUOUOuUOUOU");
             res.send(assignments);
         });
 }
-function getAssignmentsPaged2(req, res) {
-    /*return Assignment.findOne({ _id: '606ca28462f5fd134cc1132e' })
-        .populate("id_eleve")
-        .exec((err, results) => {
-            if (err) {
-                res.send(err);
-            }
-            console.log(JSON.stringify(results) + " OUOUOuUOUOU");
-            res.send(results);
-        })*/
-    this.getTutorialWithPopulate(req.params._id);
 
-}
-function getAssignmentsPaged(req, res) {
-    /*return Assignment.findById(id).populate("id_eleve");*/
-    const options = {
-        page: parseInt(req.query.page) || 1,
-        limit: parseInt(req.query.limit) || 10,
-        populate: ['id_eleve','id_matiere'],
-        lean: true,
-    };
-    return Assignment.paginate({}, options);
-    console.log(id + " IIIIIIIIIIIIIIIIIIIID");
-    //return Assignment.findOne({ _id:id}).populate("id_eleve");
 
-}
 
-const getAssignmentsPagedPopulate = async function (req, res) {
-    var tutorial = await getAssignmentsPaged(req, res);
-    if (!tutorial) {
-        res.send("err");
-    }
-    console.log(JSON.stringify(tutorial) + " OUOUOuUOUOU");
-    res.send(tutorial);
-}
+
 // Ajout d'un assignment (POST)
 function postAssignment(req, res) {
-    console.log("post");
     let assignment = new Assignment();
     assignment.id = req.body.id;
     assignment.nom = req.body.nom;
@@ -92,9 +59,6 @@ function postAssignment(req, res) {
     assignment.rendu = req.body.rendu;
     assignment.id_eleve = req.body.id_eleve;
     assignment.id_matiere = req.body.id_matiere;
-    console.log(req.body.note+ " req.body.note");
-    console.log(req.body.remarque+ " req.body.remarque");
-
     assignment.note = req.body.note;
     assignment.remarque = req.body.remarque;
 
@@ -102,14 +66,12 @@ function postAssignment(req, res) {
         if (err) {
             res.send('cant post assignment ', err);
         }
-        res.json({ message: `${assignment.nom} saved!` })
+        res.json({ message:'saved!' })
     })
 }
 
 // Update d'un assignment (PUT)
 function updateAssignment(req, res) {
-    console.log("UPDATE recu assignment : ");
-    console.log(req.body.id);
     Assignment.findByIdAndUpdate(req.body._id, req.body, { new: true }, (err, assignment) => {
         if (err) {
             console.log(err);
@@ -125,13 +87,54 @@ function updateAssignment(req, res) {
 
 // Récupérer un assignment par son id (GET)
 function getAssignment(req, res) {
-
     let assignmentId = req.params.id;
-    Assignment.findOne({ id: assignmentId }, (err, assignment) => {
-        if (err) { res.send(err) }
-        res.json(assignment);
-    })
+    Assignment.findOne({ id: assignmentId })
+        .populate('id_eleve')
+        .populate('id_matiere')
+        .exec(function (err, assignment) {
+            if (err) { res.send(err) }
+            console.log(JSON.stringify(assignment));
+            res.json(assignment);
+        });
 }
+
+const getAssignmentsPagedPopulate = async function (req, res) {
+    var assignments = await getAssignmentsPaged(req);
+    if (!assignments) {
+        res.send("err");
+    }
+    res.send(assignments);
+}
+function getAssignmentsPaged(req) {
+
+    const options = {
+        page: parseInt(req.query.page) || 1,
+        limit: parseInt(req.query.limit) || 10,
+        populate: ['id_eleve', 'id_matiere'],
+    };
+    return Assignment.paginate({}, options);
+}
+
+const getAssignmentsPagedPopulateSearch = async function (req, res) {
+    console.log("getAssignmentsPagedPopulateSearch");
+    var assignments = await searchAssignment(req);
+    if (!assignments) {
+        res.send("err");
+    }
+    res.send(assignments);
+}
+function searchAssignment(req) {
+    let search = req.query.search;
+    console.log(req.query.search + " SEARCH");
+        const options = {
+            match:{ nom: { $regex: '.*' + search + '.*' }},
+            page: parseInt(req.query.page) || 1,
+            limit: parseInt(req.query.limit) || 10,
+            populate: ['id_eleve', 'id_matiere'],
+        };
+        return Assignment.paginate({}, options);
+}
+
 // suppression d'un assignment (DELETE)
 function deleteAssignment(req, res) {
     let assignmentId = req.params.id;
@@ -148,4 +151,14 @@ function deleteAssignment(req, res) {
 
 
 
-module.exports = { getAssignmentsPaged, getAssignmentsPagedPopulate, getAssignmentsPaged2, getAssignmentsPaged, getAssignments, postAssignment, getAssignment, updateAssignment, deleteAssignment };
+module.exports = {
+    getAssignmentsPagedSimple,
+    getAssignmentsPaged,
+    getAssignmentsPagedPopulate,
+    getAssignmentsPaged,
+    getAssignments,
+    postAssignment,
+    getAssignment,
+    updateAssignment,
+    deleteAssignment,searchAssignment,getAssignmentsPagedPopulateSearch
+};
