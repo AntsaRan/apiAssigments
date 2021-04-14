@@ -153,11 +153,9 @@ function deleteAssignment(req, res) {
 
 
 module.exports = {
-    getAssignmentsPagedSimple,
     getAssignmentsPaged,
     getAssignmentsPagedPopulate,
     getAssignmentsPaged,
-    getAssignments,
     postAssignment,
     getAssignment,
     updateAssignment,
