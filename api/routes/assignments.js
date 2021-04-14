@@ -13,8 +13,8 @@ function getAssignments(req, res){
 } */
 
 
-// Récupérer tous les assignments (GET)
-function getAssignments(req, res) {
+// Récupérer tous les assignments (GET) ( version TP)
+/*function getAssignments(req, res) {
     var aggregateQuery = Assignment.aggregate();
     Assignment.aggregatePaginate(aggregateQuery, {
         page: parseInt(req.query.page) || 1,
@@ -27,10 +27,10 @@ function getAssignments(req, res) {
             res.send(assignments);
         }
     );
-}
+}*/
 
 
-function getAssignmentsPagedSimple(req, res) {
+/*function getAssignmentsPagedSimple(req, res) {
     var aggregateQuery = Assignment.aggregate();
 
     const options = {
@@ -46,7 +46,7 @@ function getAssignmentsPagedSimple(req, res) {
             res.send(assignments);
         });
 }
-
+*/
 
 
 
