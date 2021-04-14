@@ -72,7 +72,6 @@ function postAssignment(req, res) {
 
 // Update d'un assignment (PUT)
 function updateAssignment(req, res) {
-    console.log(req.body._id + 'req.body._id');
     Assignment.findByIdAndUpdate(req.body._id, req.body, { new: true }, (err, assignment) => {
         if (err) {
             console.log(err);
@@ -94,7 +93,6 @@ function getAssignment(req, res) {
         .populate('id_matiere')
         .exec(function (err, assignment) {
             if (err) { res.send(err) }
-            console.log(JSON.stringify(assignment));
             res.json(assignment);
         });
 }
@@ -117,29 +115,26 @@ function getAssignmentsPaged(req) {
 }
 
 const getAssignmentsPagedPopulateSearch = async function (req, res) {
-    console.log("getAssignmentsPagedPopulateSearch");
-    var assignments = await searchAssignment(req);
+    var assignments = await searchAssignment(req,res);
     if (!assignments) {
         res.send("err");
     }
     res.send(assignments);
 }
-function searchAssignment(req) {
+function searchAssignment(req,res) {
     let search = req.query.search;
-    console.log(req.query.search + " SEARCH");
+    let query = { nom: { $regex: new RegExp(search), $options: "i" } };
+
         const options = {
-            match:{ nom: { $regex: '.*' + search + '.*' }},
             page: parseInt(req.query.page) || 1,
             limit: parseInt(req.query.limit) || 10,
             populate: ['id_eleve', 'id_matiere'],
         };
-        return Assignment.paginate({}, options);
+        return Assignment.paginate(query, options);
 }
-
 // suppression d'un assignment (DELETE)
 function deleteAssignment(req, res) {
     let assignmentId = req.params.id;
-    console.log(assignmentId + " DELETE ASSIGNMENT ");
     Assignment.findByIdAndRemove(assignmentId, (err, assignment) => {
         if (err) {
             console.log(err + " err");

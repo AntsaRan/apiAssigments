@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 var ProfSchema = new mongoose.Schema({
     id: Number,
     nom: String,
-    image: String
+    prenom:String,
+    image: String,
 });
 mongoose.model('Prof', ProfSchema);
 

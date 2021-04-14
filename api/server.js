@@ -70,11 +70,13 @@ app.route(prefix + '/auth/:id', )
 
 //Les eleves
 app.route(prefix + '/eleve')
-    .get(eleve.getEleveList)
-    .post(eleve.postEleve);
+    .get(eleve.getElevesPaged)
+    .post(eleve.postEleve)
+    .put(VerifyToken, eleve.updateEleve);
 
 app.route(prefix + '/eleve/:id')
-    .get(eleve.getEleve);
+    .get(eleve.getEleve)
+    .delete(VerifyToken, eleve.deleteAssignment);
 
 //Les matiere
 app.route(prefix + '/matiere')
@@ -83,6 +85,7 @@ app.route(prefix + '/matiere')
 
 app.route(prefix + '/matiere/:id')
     .get(matiere.getMatiere);
+
 app.route(prefix + '/matiereObjId/:id')
     .get(matiere.getMatiereObjId);
 
