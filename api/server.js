@@ -91,6 +91,7 @@ app.route(prefix + '/matiereObjId/:id')
 
 //Les prof
 app.route(prefix + '/prof')
+    .get(prof.getProfsList)
     .post(prof.postProf);
 
 app.route(prefix + '/prof/:id')

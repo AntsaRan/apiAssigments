@@ -33,5 +33,19 @@ function postProf(req, res) {
         res.json({ message: `${prof.nom} saved!` })
     })
 }
+function getProfsList(req, res) {
+    var aggregateQuery = Prof.aggregate();
+    Prof.aggregatePaginate(aggregateQuery, {
+        page: parseInt(req.query.page) || 1,
+        limit: parseInt(req.query.limit) || 10,
+    },
+        (err, profs) => {
+            if (err) {
+                res.send(err);
+            }
+            res.send(profs);
+        }
+    );
+}
 
-module.exports = { getProf, postProf, getProfObjId };
+module.exports = { getProfsList,getProf, postProf, getProfObjId };
