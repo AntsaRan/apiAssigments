@@ -1,6 +1,6 @@
 let Assignment = require('../model/assignment');
 
-/* Récupérer tous les assignments (GET)
+
 function getAssignments(req, res){
     console.log("gets");
     Assignment.find((err, assignments) => {
@@ -10,7 +10,7 @@ function getAssignments(req, res){
       //  console.log(assignments);
         res.send(assignments);
     });
-} */
+} 
 
 
 // Récupérer tous les assignments (GET) ( version TP)
@@ -88,11 +88,13 @@ function updateAssignment(req, res) {
 // Récupérer un assignment par son id (GET)
 function getAssignment(req, res) {
     let assignmentId = req.params.id;
+    console.log(assignmentId + " API ASS ID");
     Assignment.findOne({ id: assignmentId })
         .populate('id_eleve')
         .populate('id_matiere')
         .exec(function (err, assignment) {
             if (err) { res.send(err) }
+            console.log(assignment.nom + " NOM API ASS");
             res.json(assignment);
         });
 }
@@ -154,5 +156,5 @@ module.exports = {
     postAssignment,
     getAssignment,
     updateAssignment,
-    deleteAssignment,searchAssignment,getAssignmentsPagedPopulateSearch
+    deleteAssignment,searchAssignment,getAssignmentsPagedPopulateSearch,getAssignments
 };
