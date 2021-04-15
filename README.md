@@ -1,7 +1,7 @@
 # Projet Angular MDBS Madagascar 2021
 
 ## Groupe:
-	- RAKOTOHANITRINIAINA Maharo Rivomahefa N°025
+	- RAKOTOHANITRINIAINA Maharo Rivomahefa N°25
 	- RANARIVELO Voahangy Antsa N°35
   
 ## Liens Heroku:
